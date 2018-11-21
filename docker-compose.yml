@@ -1,0 +1,23 @@
+version: '3'
+services:
+  webapp:
+    build: .
+    volumes:
+      - ./server:/server
+    networks:  # <-- here
+      - nginx_network  
+  nginx: 
+    image: nginx:alpine
+    ports:
+      - 80:80
+    container_name: production_nginx
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:  # <-- wait for webapp to be "ready" before starting this service
+      - webapp
+    networks:  
+      - nginx_network
+networks:  
+  nginx_network:
+    driver: bridge              
+    
