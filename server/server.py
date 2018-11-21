@@ -2,7 +2,10 @@ from flask import Flask
 from flask_restplus import Resource, Api
 
 application = Flask(__name__)
-api = Api(application)
+# api = Api(application)
+api = Api(application, version='1.0', title='Sample REST API',
+    description='A simple REST API',
+)
 
 @api.route('/hello')
 class HelloWorld(Resource):
